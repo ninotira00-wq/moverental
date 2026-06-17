@@ -1,0 +1,802 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Move - Rental Sepeda Labuan Bajo</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-color: #035273;
+            --secondary-color: #0a8cc9;
+            --accent-color: #ff6b35;
+            --light-bg: #f8f9fa;
+            --text-dark: #1a1a1a;
+            --text-light: #666;
+            --border-color: #e0e0e0;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--text-dark);
+            overflow-x: hidden;
+        }
+
+        /* Header & Navigation */
+        header {
+            background: white;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 5%;
+            max-width: 1400px;
+            margin: 0 auto;
+            width: 100%;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: var(--primary-color);
+            text-decoration: none;
+        }
+
+        .logo img {
+            height: 50px;
+            width: auto;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--text-dark);
+            transition: color 0.3s;
+            font-weight: 500;
+        }
+
+        .nav-links a:hover {
+            color: var(--primary-color);
+        }
+
+        .nav-links .cta-btn {
+            background: var(--primary-color);
+            color: white;
+            padding: 0.6rem 1.5rem;
+            border-radius: 25px;
+            transition: background 0.3s;
+        }
+
+        .nav-links .cta-btn:hover {
+            background: var(--secondary-color);
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+            color: white;
+            padding: 5rem 5%;
+            text-align: center;
+            min-height: 600px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .hero-content {
+            max-width: 800px;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+        }
+
+        .hero p {
+            font-size: 1.3rem;
+            margin-bottom: 2rem;
+            opacity: 0.95;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 0.8rem 2rem;
+            border: none;
+            border-radius: 25px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-decoration: none;
+            display: inline-block;
+            font-weight: 600;
+        }
+
+        .btn-primary {
+            background: white;
+            color: var(--primary-color);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+        }
+
+        .btn-secondary {
+            background: var(--accent-color);
+            color: white;
+            border: 2px solid var(--accent-color);
+        }
+
+        .btn-secondary:hover {
+            background: transparent;
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+        }
+
+        /* Location Section */
+        .location-section {
+            background: var(--light-bg);
+            padding: 3rem 5%;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            font-size: 2.5rem;
+            margin-bottom: 2rem;
+            color: var(--primary-color);
+            text-align: center;
+        }
+
+        .location-content {
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .location-content h3 {
+            color: var(--secondary-color);
+            margin-bottom: 1rem;
+            font-size: 1.3rem;
+        }
+
+        .location-content p {
+            color: var(--text-light);
+            font-size: 1.1rem;
+            margin-bottom: 1rem;
+        }
+
+        /* Bikes Section */
+        .bikes-section {
+            padding: 3rem 5%;
+            background: white;
+        }
+
+        .bikes-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .bike-card {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .bike-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.2);
+        }
+
+        .bike-image {
+            width: 100%;
+            height: 300px;
+            object-fit: contain;
+            padding: 2rem;
+            background: var(--light-bg);
+        }
+
+        .bike-info {
+            padding: 1.5rem;
+        }
+
+        .bike-info h3 {
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+            font-size: 1.5rem;
+        }
+
+        .bike-info p {
+            color: var(--text-light);
+            margin-bottom: 1rem;
+        }
+
+        /* Pricing Section */
+        .pricing-section {
+            background: var(--light-bg);
+            padding: 3rem 5%;
+        }
+
+        .pricing-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .pricing-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .pricing-card {
+            background: white;
+            border-radius: 15px;
+            padding: 2rem;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            border-top: 4px solid var(--primary-color);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .pricing-card:nth-child(2) {
+            border-top-color: var(--secondary-color);
+        }
+
+        .pricing-card:nth-child(3) {
+            border-top-color: var(--accent-color);
+        }
+
+        .pricing-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.2);
+        }
+
+        .pricing-card h3 {
+            color: var(--primary-color);
+            font-size: 1.8rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .pricing-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 0.8rem 0;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .pricing-item:last-child {
+            border-bottom: none;
+        }
+
+        .pricing-item-name {
+            font-weight: 600;
+            color: var(--text-dark);
+        }
+
+        .pricing-item-price {
+            color: var(--accent-color);
+            font-weight: bold;
+            font-size: 1.1rem;
+        }
+
+        .price-note {
+            font-size: 0.85rem;
+            color: var(--text-light);
+            margin-top: 0.5rem;
+            font-style: italic;
+        }
+
+        .reserve-btn {
+            width: 100%;
+            background: var(--primary-color);
+            color: white;
+            padding: 1rem;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 1.5rem;
+            transition: background 0.3s;
+        }
+
+        .reserve-btn:hover {
+            background: var(--secondary-color);
+        }
+
+        /* Terms & Conditions */
+        .terms-section {
+            padding: 3rem 5%;
+            background: white;
+        }
+
+        .terms-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .terms-card {
+            background: var(--light-bg);
+            padding: 1.5rem;
+            border-radius: 10px;
+            border-left: 4px solid var(--primary-color);
+        }
+
+        .terms-card h4 {
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+            font-size: 1.1rem;
+        }
+
+        .terms-card ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .terms-card li {
+            padding: 0.5rem 0;
+            color: var(--text-light);
+            position: relative;
+            padding-left: 1.5rem;
+        }
+
+        .terms-card li:before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: var(--accent-color);
+            font-weight: bold;
+        }
+
+        /* Contact Section */
+        .contact-section {
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+            color: white;
+            padding: 3rem 5%;
+            text-align: center;
+        }
+
+        .contact-content {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .contact-content h2 {
+            font-size: 2.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .contact-info {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .contact-box {
+            background: rgba(255,255,255,0.1);
+            padding: 1.5rem;
+            border-radius: 10px;
+            backdrop-filter: blur(10px);
+        }
+
+        .contact-box h4 {
+            margin-bottom: 0.5rem;
+            font-size: 1.1rem;
+        }
+
+        .contact-box a {
+            color: white;
+            text-decoration: none;
+            transition: opacity 0.3s;
+        }
+
+        .contact-box a:hover {
+            opacity: 0.8;
+        }
+
+        /* Footer */
+        footer {
+            background: var(--text-dark);
+            color: white;
+            text-align: center;
+            padding: 2rem 5%;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .nav-links {
+                gap: 1rem;
+                font-size: 0.9rem;
+            }
+
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .hero p {
+                font-size: 1rem;
+            }
+
+            .bikes-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .pricing-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .hero-buttons {
+                flex-direction: column;
+            }
+
+            .btn {
+                width: 100%;
+            }
+        }
+
+        @media (max-width: 480px) {
+            nav {
+                padding: 0.8rem 3%;
+            }
+
+            .logo {
+                font-size: 1.3rem;
+            }
+
+            .logo img {
+                height: 40px;
+            }
+
+            .nav-links {
+                gap: 0.5rem;
+            }
+
+            .hero {
+                padding: 2rem 5%;
+                min-height: auto;
+            }
+
+            .hero h1 {
+                font-size: 1.5rem;
+            }
+
+            .section-title {
+                font-size: 1.8rem;
+            }
+
+            .pricing-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .whatsapp-float {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background: #25D366;
+            color: white;
+            border-radius: 50%;
+            width: 60px;
+            height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 30px;
+            cursor: pointer;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+            transition: transform 0.3s, background 0.3s;
+            text-decoration: none;
+            z-index: 99;
+        }
+
+        .whatsapp-float:hover {
+            background: #20BA5F;
+            transform: scale(1.1);
+        }
+    </style>
+</head>
+<body>
+    <!-- Header & Navigation -->
+    <header>
+        <nav>
+            <a href="#home" class="logo">
+                <img src="move.svg" alt="Move Logo">
+                <span>MOVE</span>
+            </a>
+            <ul class="nav-links">
+                <li><a href="#bikes">Sepeda</a></li>
+                <li><a href="#pricing">Paket Harga</a></li>
+                <li><a href="#terms">Ketentuan</a></li>
+                <li><a href="#contact" class="cta-btn">Reservasi</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="hero-content">
+            <h1>Jelajahi Labuan Bajo dengan Sepeda Move</h1>
+            <p>Nikmati pengalaman bersepeda yang tak terlupakan di keindahan alam Labuan Bajo</p>
+            <div class="hero-buttons">
+                <a href="#bikes" class="btn btn-primary">Lihat Paket</a>
+                <a href="#contact" class="btn btn-secondary">Pesan Sekarang</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Location Section -->
+    <section class="location-section">
+        <div class="container">
+            <h2 class="section-title">Lokasi Kami</h2>
+            <div class="location-content">
+                <h3>📍 Jln Reklamasi Pantai, Kampung Air Labuan Bajo</h3>
+                <p>Kabupaten Manggarai Barat, Flores, Nusa Tenggara Timur</p>
+                <p style="color: var(--secondary-color); font-weight: 600;">Berlokasi strategis di pusat pariwisata Labuan Bajo</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Bikes Section -->
+    <section class="bikes-section" id="bikes">
+        <div class="container">
+            <h2 class="section-title">Jenis Sepeda Kami</h2>
+            <div class="bikes-grid">
+                <!-- MTB Card -->
+                <div class="bike-card">
+                    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAyAAAASwCAYAAABmI5VkAAAAIGNIUk0AAHolAACAgQAAPgAAAIDoAAB6DgAA3pIAABBEAAA6mAAAF3CculE8AAAA" alt="Polygon MTB Active 26" class="bike-image" style="background-image: url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAwIiBoZWlnaHQ9IjMwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iNDAwIiBoZWlnaHQ9IjMwMCIgZmlsbD0iI2Y4ZjlmYSIvPjx0ZXh0IHRleHQtYW5jaG9yPSJtaWRkbGUiIHg9IjIwMCIgeT0iMTUwIiBzdHlsZT0iZm9udC1zaXplOjIwcHg7Zm9udC13ZWlnaHQ6Ym9sZDtmaWxsPSMwMzUyNzM7Ij5QT0xZR09OIE1UQiBBQ1RJVkUgMjY8L3RleHQ+PC9zdmc+'); background-size: cover;">
+                    <div class="bike-info">
+                        <h3>🚴 MTB - Mountain Bike</h3>
+                        <p><strong>Polygon MTB Active 26</strong></p>
+                        <p>Cocok untuk petualangan di medan yang menantang dan jalanan berliku Labuan Bajo</p>
+                        <p style="color: var(--accent-color); font-weight: bold; margin-top: 1rem;">Ideal untuk: Petualang & Pemula</p>
+                    </div>
+                </div>
+
+                <!-- CTB Card -->
+                <div class="bike-card">
+                    <img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAwIiBoZWlnaHQ9IjMwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iNDAwIiBoZWlnaHQ9IjMwMCIgZmlsbD0iI2Y4ZjlmYSIvPjx0ZXh0IHRleHQtYW5jaG9yPSJtaWRkbGUiIHg9IjIwMCIgeT0iMTUwIiBzdHlsZT0iZm9udC1zaXplOjIwcHg7Zm9udC13ZWlnaHQ6Ym9sZDtmaWxsPSMwMzUyNzM7Ij5QT0xZR09OIExPVklOQTwvdGV4dD48L3N2Zz4=" alt="Polygon Lovina CTB" class="bike-image">
+                    <div class="bike-info">
+                        <h3>🚲 CTB - City Touring Bike</h3>
+                        <p><strong>Polygon Lovina</strong></p>
+                        <p>Sempurna untuk menjelajahi kota dengan nyaman dan aman. Ideal untuk keluarga dan fotografi</p>
+                        <p style="color: var(--accent-color); font-weight: bold; margin-top: 1rem;">Ideal untuk: Keluarga & Fotografi</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Pricing Section -->
+    <section class="pricing-section" id="pricing">
+        <div class="pricing-container">
+            <h2 class="section-title">Paket Harga</h2>
+            <div class="pricing-grid">
+                <!-- Regular Package -->
+                <div class="pricing-card">
+                    <h3>📋 Paket Reguler</h3>
+                    <div class="pricing-item">
+                        <span class="pricing-item-name">1 Jam</span>
+                        <span class="pricing-item-price">Rp 15.000</span>
+                    </div>
+                    <div class="pricing-item">
+                        <span class="pricing-item-name">1 Hari</span>
+                        <span class="pricing-item-price">Rp 100.000</span>
+                    </div>
+                    <p class="price-note">Paket standar untuk penggunaan sepeda</p>
+                    <button class="reserve-btn" onclick="sendWhatsAppMessage('Reguler')">Pesan Sekarang</button>
+                </div>
+
+                <!-- Bike + Photo Package -->
+                <div class="pricing-card">
+                    <h3>🚴 Sepeda + Foto</h3>
+                    <div class="pricing-item">
+                        <span class="pricing-item-name">1 Jam</span>
+                        <span class="pricing-item-price">Rp 50.000</span>
+                    </div>
+                    <div class="pricing-item">
+                        <span class="pricing-item-name">Foto Edit</span>
+                        <span class="pricing-item-price">Maks 10</span>
+                    </div>
+                    <div class="pricing-item">
+                        <span class="pricing-item-name">Foto Mentah</span>
+                        <span class="pricing-item-price">Maks 20/orang</span>
+                    </div>
+                    <div class="pricing-item">
+                        <span class="pricing-item-name">2 Jam</span>
+                        <span class="pricing-item-price">Rp 75.000</span>
+                    </div>
+                    <div class="pricing-item">
+                        <span class="pricing-item-name">Foto Edit</span>
+                        <span class="pricing-item-price">Maks 15</span>
+                    </div>
+                    <div class="pricing-item">
+                        <span class="pricing-item-name">Foto Mentah</span>
+                        <span class="pricing-item-price">Maks 30/orang</span>
+                    </div>
+                    <p class="price-note">Sempurna untuk mengabadikan momen spesial</p>
+                    <button class="reserve-btn" onclick="sendWhatsAppMessage('Sepeda+Foto')">Pesan Sekarang</button>
+                </div>
+
+                <!-- Group Package -->
+                <div class="pricing-card">
+                    <h3>👥 Paket Grup</h3>
+                    <div class="pricing-item">
+                        <span class="pricing-item-name">1 Jam</span>
+                        <span class="pricing-item-price">Rp 160.000</span>
+                    </div>
+                    <div class="pricing-item">
+                        <span class="pricing-item-name">Foto Edit</span>
+                        <span class="pricing-item-price">Maks 12</span>
+                    </div>
+                    <div class="pricing-item">
+                        <span class="pricing-item-name">Foto Mentah</span>
+                        <span class="pricing-item-price">Maks 30/grup</span>
+                    </div>
+                    <div class="pricing-item">
+                        <span class="pricing-item-name">2 Jam</span>
+                        <span class="pricing-item-price">Rp 300.000</span>
+                    </div>
+                    <div class="pricing-item">
+                        <span class="pricing-item-name">Foto Edit</span>
+                        <span class="pricing-item-price">Maks 15</span>
+                    </div>
+                    <div class="pricing-item">
+                        <span class="pricing-item-name">Foto Mentah</span>
+                        <span class="pricing-item-price">Maks 40/grup</span>
+                    </div>
+                    <p class="price-note">Untuk kegiatan grup dan corporate</p>
+                    <button class="reserve-btn" onclick="sendWhatsAppMessage('Grup')">Pesan Sekarang</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Terms & Conditions -->
+    <section class="terms-section" id="terms">
+        <div class="container">
+            <h2 class="section-title">Syarat & Ketentuan</h2>
+            <div class="terms-grid">
+                <div class="terms-card">
+                    <h4>📋 Syarat Rental</h4>
+                    <ul>
+                        <li>Foto kondisi barang sebelum rental</li>
+                        <li>Foto peminjam (KTP/Identitas)</li>
+                        <li>Pembayaran harus lunas</li>
+                        <li>Kompensasi: 10 menit gratis jika lebih dari 10 menit terkena denda Rp 5.000</li>
+                    </ul>
+                </div>
+
+                <div class="terms-card">
+                    <h4>🔧 Kerusakan Ringan</h4>
+                    <ul>
+                        <li>Lecet pada frame atau body</li>
+                        <li>Baut atau aksesoris hilang</li>
+                        <li>Ban bocor atau kempes</li>
+                        <li>Kompensasi: Rp 100.000</li>
+                    </ul>
+                </div>
+
+                <div class="terms-card">
+                    <h4>⚠️ Kerusakan Berat</h4>
+                    <ul>
+                        <li>Frame patah atau bengkok</li>
+                        <li>Velg yang bengkok parah</li>
+                        <li>Komponen utama rusak</li>
+                        <li>Kompensasi: Harga kerusakan + ongkos kirim</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section class="contact-section" id="contact">
+        <div class="contact-content">
+            <h2>Hubungi Kami</h2>
+            <p>Silakan hubungi kami melalui WhatsApp untuk reservasi dan pertanyaan lebih lanjut</p>
+            <div class="contact-info">
+                <div class="contact-box">
+                    <h4>📱 WhatsApp 1</h4>
+                    <a href="https://wa.me/6285253255791?text=Halo%20Move!%20Saya%20ingin%20melakukan%20reservasi%20sepeda" target="_blank">
+                        +62 852 5325 5791
+                    </a>
+                </div>
+                <div class="contact-box">
+                    <h4>📱 WhatsApp 2</h4>
+                    <a href="https://wa.me/6282144065237?text=Halo%20Move!%20Saya%20ingin%20melakukan%20reservasi%20sepeda" target="_blank">
+                        +62 821 4406 5237
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2024 Move - Rental Sepeda Labuan Bajo. Semua hak dilindungi.</p>
+        <p>Jln Reklamasi Pantai, Kampung Air Labuan Bajo, Kabupaten Manggarai Barat, Flores, NTT</p>
+    </footer>
+
+    <!-- WhatsApp Float Button -->
+    <a href="https://wa.me/6285253255791?text=Halo%20Move!%20Saya%20ingin%20melakukan%20reservasi%20sepeda" class="whatsapp-float" target="_blank" title="Chat dengan WhatsApp">
+        💬
+    </a>
+
+    <script>
+        function sendWhatsAppMessage(packageType) {
+            const messages = {
+                'Reguler': 'Saya ingin memesan paket reguler sepeda Move. Bisakah Anda memberikan informasi lebih lanjut?',
+                'Sepeda+Foto': 'Saya ingin memesan paket Sepeda + Foto. Bisakah Anda memberikan informasi lebih lanjut mengenai dokumentasi foto?',
+                'Grup': 'Saya ingin memesan paket grup untuk acara grup. Bisakah Anda memberikan informasi lebih lanjut dan ketersediaan?'
+            };
+
+            const message = encodeURIComponent(messages[packageType] || 'Halo Move! Saya ingin melakukan reservasi sepeda.');
+            const whatsappUrl = `https://wa.me/6285253255791?text=${message}`;
+            window.open(whatsappUrl, '_blank');
+        }
+
+        // Smooth scrolling untuk link navigasi
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+
+        // Navbar sticky effect
+        window.addEventListener('scroll', function() {
+            const header = document.querySelector('header');
+            if (window.scrollY > 0) {
+                header.style.boxShadow = '0 4px 15px rgba(0,0,0,0.15)';
+            } else {
+                header.style.boxShadow = '0 2px 10px rgba(0,0,0,0.1)';
+            }
+        });
+    </script>
+</body>
+</html>
